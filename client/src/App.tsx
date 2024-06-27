@@ -1,6 +1,6 @@
 import { useState } from 'react';
+import HomePage from './pages/HomePage';
 import './App.css';
-import NavBar from './components/NavBar';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <div>
-        <NavBar />
+        <HomePage />
       </div>
     </>
   );
