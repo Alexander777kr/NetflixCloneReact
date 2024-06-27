@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import HomePage from './pages/HomePage';
+import LoginPage from './pages/LoginPage';
 import './App.css';
 
 function App() {
@@ -8,7 +9,7 @@ function App() {
   return (
     <>
       <div>
-        <HomePage />
+        <LoginPage />
       </div>
     </>
   );
