@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import './App.css';
 import PlansPage from './pages/PlansPage';
 import BrowsePage from './pages/BrowsePage';
+import WatchPage from './pages/WatchPage';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,7 +12,7 @@ function App() {
   return (
     <>
       <div>
-        <BrowsePage />
+        <WatchPage />
       </div>
     </>
   );
