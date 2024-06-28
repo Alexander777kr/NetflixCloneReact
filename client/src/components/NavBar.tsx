@@ -12,7 +12,7 @@ export default function NavBar() {
     <nav className="w-full fixed z-40">
       <div className="px-16 py-6 flex items-center">
         <img
-          className="h-16"
+          className="h-8"
           src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
           alt="logo"
         />
