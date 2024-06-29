@@ -13,7 +13,9 @@ export default function BrowsePage() {
       <NavBar />
       <BillBoard />
       <div className="pb-5">
-        <MovieList />
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {data && <MovieList movies={data} />}
       </div>
     </div>
   );
