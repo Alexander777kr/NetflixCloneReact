@@ -29,7 +29,6 @@ const reducer = (state: State, action: Action): State => {
         ...state,
         loading: true,
         error: null,
-        data: null
       };
     case ActionType.FAILED:
       return {
@@ -54,13 +53,14 @@ const useMoviesList = (offset: number) => {
 
   useEffect(() => {
     fetchMovieList();
-  }, []);
+  }, [offset]);
 
   const fetchMovieList = async () => {
     dispatch({type: ActionType.LOADING});
     try {
       const response = await axios.get(`http://localhost:8081/movies/list?offset=${offset}`);
-      dispatch({type: ActionType.SUCCESS, payload: response.data});
+      const moviesData = data ? [...data, ...response.data] : response.data
+      dispatch({type: ActionType.SUCCESS, payload: moviesData});
     } catch (error) {
       dispatch({type: ActionType.FAILED, payload: "Something went wrong"});
     }
