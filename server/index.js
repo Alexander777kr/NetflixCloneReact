@@ -1,9 +1,8 @@
 const express = require("express");
 const cors = require("cors");
-const { prisma } = require("./db");
 
 const app = express();
-
+app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
