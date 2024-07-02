@@ -14,6 +14,7 @@ import LoginPage from './pages/LoginPage.tsx';
 import PlansPage from './pages/PlansPage.tsx';
 import BrowsePage from './pages/BrowsePage.tsx';
 import WatchPage from './pages/WatchPage.tsx';
+import PrivateRoutes from './utils/PrivateRoutes.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,8 +22,10 @@ const router = createBrowserRouter(
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/plans" element={<PlansPage />} />
-      <Route path="/browse" element={<BrowsePage />} />
-      <Route path="/browse/watch/:id" element={<WatchPage />} />
+      <Route path="/browse" element={<PrivateRoutes />}>
+        <Route path="/browse" element={<BrowsePage />} />
+        <Route path="/browse/watch/:id" element={<WatchPage />} />
+      </Route>
     </Route>
   )
 );
