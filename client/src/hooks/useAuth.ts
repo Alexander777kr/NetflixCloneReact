@@ -1,9 +1,13 @@
 import axios from "axios";
 import Cookie from "universal-cookie";
 
+import {setUser} from '../features/userSlice';
+import { useAppDispatch } from "../app/hooks";
+
 const cookie = new Cookie();
 
 const useAuth = () => {
+  const dispatch = useAppDispatch();
   const login = async ({
     email,
     password,
@@ -15,7 +19,11 @@ const useAuth = () => {
       email,
       password,
     });
-    const {token} = response.data;
+    const {token, user} = response.data;
+    dispatch(setUser({
+      email: user.email,
+      username: user.username
+    }));
     cookie.set("session_token", token);
     return response.data;
   };
@@ -34,7 +42,11 @@ const useAuth = () => {
       password,
       username,
     });
-    const {token} = response.data;
+    const {token, user} = response.data;
+    dispatch(setUser({
+      email: user.email,
+      username: user.username
+    }));
     cookie.set("session_token", token);
     return response.data;
   };
