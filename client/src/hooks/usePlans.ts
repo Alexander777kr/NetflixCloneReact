@@ -1,9 +1,11 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
 
-interface Plan {
+export interface Plan {
   id: string;
   name: string;
+  canDownload: boolean;  
+  canWatchSouthPark: boolean;
   price: {
     amount: number;
     id: string;
