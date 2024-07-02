@@ -27,12 +27,16 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    getValues,
   } = useForm<Inputs>();
+
   const [variant, setVariant] = useState(Variant.LOGIN_IN);
+
+  console.log(errors);
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
   };
+
   return (
     <div className="relative bg-black h-screen w-screen bg-opacity-50">
       <NavBar />
@@ -62,6 +66,26 @@ export default function LoginPage() {
                 type="password"
                 label="Password"
                 name="password"
+                validate={
+                  variant === Variant.SIGN_UP
+                    ? () => {
+                        const password = getValues('password');
+                        if (password.length < 8) {
+                          return 'Password must be greater than 8 characters';
+                        }
+                        if (!/[A-Z]/.test(password)) {
+                          return 'Password must have at least one uppercase value';
+                        }
+                        if (!/[a-z]/.test(password)) {
+                          return 'Password must have at least one lowercase value';
+                        }
+                        if (!/\d/.test(password)) {
+                          return 'Password must have a number';
+                        }
+                        return true;
+                      }
+                    : undefined
+                }
               />
               <input
                 type="submit"
