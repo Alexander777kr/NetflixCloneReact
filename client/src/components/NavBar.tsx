@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useAppSelector } from '../app/hooks';
+import useAuth from '../hooks/useAuth';
 
 const tabs = [
   'Home',
@@ -10,8 +12,9 @@ const tabs = [
 ];
 
 export default function NavBar() {
+  const { user, isLoading } = useAppSelector((state) => state.user.value);
   const [showBackground, setShowBackground] = useState(false);
-
+  const { logout } = useAuth();
   const addBackgroundWithScroll = () => {
     if (window.scrollY > 700) {
       setShowBackground(true);
@@ -39,7 +42,7 @@ export default function NavBar() {
           src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Logonetflix.png"
           alt="logo"
         />
-        <div className="flex gap-7 ml-8">
+        <div className="flex gap-7 ml-8 mr-auto">
           {tabs.map((tab) => (
             <div
               key={tab}
@@ -49,6 +52,13 @@ export default function NavBar() {
             </div>
           ))}
         </div>
+        {user && !isLoading && (
+          <div>
+            <div className="text-white hover:text-gray-300 cursor-pointer ml-auto">
+              <p onClick={logout}>Logout</p>
+            </div>
+          </div>
+        )}
       </div>
     </nav>
   );
