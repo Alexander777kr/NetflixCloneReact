@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PlanCard from '../components/PlanCard';
 import usePlans from '../hooks/usePlans';
 import { useAppSelector } from '../app/hooks';
 import axios from 'axios';
+import useSubscription from '../hooks/useSubscription';
+import { Navigate } from 'react-router-dom';
 
 const createSession = async (email: string, priceId: string) => {
   const response = await axios.post('http://localhost:8081/sub/session', {
@@ -16,17 +18,31 @@ const createSession = async (email: string, priceId: string) => {
 
 export default function PlansPage() {
   const { loading, data } = usePlans();
+  const [
+    { data: subscription, loading: subscriptionLoading },
+    fetchSubscription,
+  ] = useSubscription();
   const [selectedSession, setSelectedSession] = useState<null | string>(null);
   const { user } = useAppSelector((state) => state.user.value);
-  if (loading || !data) {
-    return <div>Loading...</div>;
-  }
 
   const handleClick = () => {
     if (user && selectedSession) {
       createSession(user.email, selectedSession);
     }
   };
+
+  useEffect(() => {
+    fetchSubscription();
+  }, []);
+
+  if (loading || !data || subscriptionLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (subscription) {
+    console.log(subscription);
+    return <Navigate to="/plans/manage" />;
+  }
 
   return (
     <div className="flex items-center h-screen justify-center">
