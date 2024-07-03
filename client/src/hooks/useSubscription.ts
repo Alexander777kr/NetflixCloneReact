@@ -18,7 +18,7 @@ interface State {
 const initialState: State = {
   data: null,
   error: null,
-  loading: false
+  loading: true
 };
 
 enum ActionType {
