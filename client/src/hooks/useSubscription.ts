@@ -71,7 +71,7 @@ const useSubscription: UseSubscription = () => {
     try {
       const response = await axios.get(`http://localhost:8081/sub/subscription`, {
               headers: {
-        ...(sessionToken) ? {Authorization: `Bearer ${sessionToken}`} : null
+        ...(sessionToken ? {Authorization: `Bearer ${sessionToken}`} : null)
       }
       });
       dispatch({type: ActionType.SUCCESS, payload: response.data});

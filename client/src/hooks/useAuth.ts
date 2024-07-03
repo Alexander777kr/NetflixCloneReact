@@ -56,7 +56,7 @@ const useAuth = () => {
     try {
     const response = await axios.get("http://localhost:8081/auth/me", {
       headers: {
-        ...(sessionToken) ? {Authorization: `Bearer ${sessionToken}`} : null
+        ...(sessionToken ? {Authorization: `Bearer ${sessionToken}`} : null)
       }
     });
     const user = response.data;
