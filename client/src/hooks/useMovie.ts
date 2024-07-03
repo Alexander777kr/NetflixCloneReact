@@ -1,6 +1,9 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
 import { Movie } from "../types";
+import Cookie from "universal-cookie";
+
+const cookie = new Cookie();
 
 interface State {
   data: Movie | null;
@@ -50,6 +53,7 @@ const reducer = (state: State, action: Action): State => {
 }
 
 const useMovie = (id: string) => {
+  const sessionToken = cookie.get("session_token");
   const [{data, loading, error}, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -59,10 +63,17 @@ const useMovie = (id: string) => {
   const fetchMovie = async () => {
     dispatch({type: ActionType.LOADING});
     try {
-      const response = await axios.get(`http://localhost:8081/movie/${id}`);
+      const response = await axios.get(`http://localhost:8081/movie/${id}`, {
+         headers: {
+        ...(sessionToken ? {Authorization: `Bearer ${sessionToken}`} : null)
+      }
+      });
       dispatch({type: ActionType.SUCCESS, payload: response.data});
     } catch (error) {
-      dispatch({type: ActionType.FAILED, payload: "Something went wrong"});
+      if (axios.isAxiosError(error)) {
+        console.log(error);
+        dispatch({type: ActionType.FAILED, payload: error?.response?.data?.errors[0].msg });
+      }
     }
   }
 

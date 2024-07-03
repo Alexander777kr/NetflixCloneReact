@@ -1,5 +1,5 @@
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import useMovie from '../hooks/useMovie';
 
 export default function WatchPage() {
@@ -9,6 +9,22 @@ export default function WatchPage() {
 
   if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (error === 'Unauthorized; need premium plan') {
+    return (
+      <div className="flex-col flex justify-center items-center h-screen w-screen">
+        <h1 className="font-bold text-3xl ">
+          You need a premium plan to watch this
+        </h1>
+        <Link
+          to="/plans/manage"
+          className="mt-2 bg-indigo-400 rounded px-10 py-4"
+        >
+          Manage Plans
+        </Link>
+      </div>
+    );
   }
 
   if (error || !data) {
